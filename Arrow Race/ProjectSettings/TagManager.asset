@@ -5,11 +5,14 @@ TagManager:
   serializedVersion: 2
   tags:
   - Platform
-  - Enemy
   - Obstacle
   - GoldBox
   - Rock
   - Weapon
+  - Wall
+  - EnemyDummy
+  - EnemyPlayer
+  - EnemyText
   layers:
   - Default
   - TransparentFX

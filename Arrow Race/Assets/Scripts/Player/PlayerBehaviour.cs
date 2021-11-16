@@ -5,48 +5,64 @@ using UnityEngine;
 public class PlayerBehaviour : MonoBehaviour
 {
 
-    bool isShootingReady = true;
+    private bool isGameStarted;
     [SerializeField]
-    private Transform RockPrefab;
+    private Transform arrowPrefab;
 
-    //private Transform RockParent;
+    private Transform arrowparent;
 
-    private Transform rockPos;
+    Vector3 arrowpos;
 
-    [SerializeField]
-    private float rockforce = 10f, rock_cooldown = 2f;
+
+
+    private float arrowx=0f, arrowy = 2.5f, arrowz = 2.5f;
+
+    private float  arrow_cooldown = 0.4f;
 
     private void Awake()
     {
-        rockPos = GameObject.Find("hand.R").transform;
+       // _GameManager = GameObject.Find("GameManager").GetComponent<GameManager>();
+        arrowpos = new Vector3(transform.position.x + arrowx, transform.position.y + arrowy, transform.position.z + arrowz);
+        arrowparent = transform;
+
     }
     private void Start()
     {
+
         StartCoroutine(constantShoot());
     }
+    
 
-    public void Shoot()
-    {
-        Vector3 rockposition = rockPos.transform.position;
-
-        //if you want to arrange the position, change these parameters
-        //rockposition.x += 1f;
-        //rockposition.y += 1f;
-        //rockposition.z += 1f;
-
-        Transform newRock = (Transform)Instantiate(RockPrefab, rockposition, Quaternion.identity);
-        newRock.GetComponent<Rigidbody>().AddForce(transform.forward * rockforce);
-        //newRock.parent = transform;
-
-
-    }
-
+    
     IEnumerator constantShoot()
     {
-        while (true)
-        {
-            Shoot();
-            yield return new WaitForSeconds(rock_cooldown);
-        }
+       
+            while (true)
+            {
+                arrowpos = new Vector3(transform.position.x + arrowx, transform.position.y + arrowy, transform.position.z + arrowz);
+                Transform newArrow = (Transform)Instantiate(arrowPrefab, arrowpos, Quaternion.identity);
+                newArrow.parent = gameObject.transform;
+                yield return new WaitForSeconds(arrow_cooldown);
+            }
+        
     }
+    private void Update()
+    {
+        //isGameStarted = GameManager.instance.isLevelStarted;
+    }
+    //public void Shoot()
+    //{
+
+    //    //if you want to arrange the position, change these parameters
+    //    //rockposition.x += 1f;
+    //    //rockposition.y += 1f;
+    //    //rockposition.z += 1f;
+
+    //    Transform newRock = (Transform)Instantiate(RockPrefab, rockposition, Quaternion.identity);
+    //    //newRock.GetComponent<Rigidbody>().AddForce(transform.forward * rockforce);
+    //    //newRock.parent = transform;
+
+
+    //}
+
 }
