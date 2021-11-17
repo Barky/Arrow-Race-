@@ -849,6 +849,7 @@ GameObject:
   - component: {fileID: 1262909573}
   - component: {fileID: 4754230416152866984}
   - component: {fileID: 5445636452216166441}
+  - component: {fileID: 6938018934035396338}
   m_Layer: 0
   m_Name: PlayerEnemy
   m_TagString: EnemyPlayer
@@ -904,7 +905,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0236ee9e1ffb9324a951cec618e5b7d3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerprefab: {fileID: 7323868458459948439, guid: d4231cf35c07ece48886930603ec90dc, type: 3}
 --- !u!54 &4754230416152866984
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -934,6 +934,19 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 1.7410209, y: 2.8762891, z: 1}
   m_Center: {x: 0.04247889, y: 1.4992019, z: 0}
+--- !u!114 &6938018934035396338
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6050799781908289412}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a92f7df48d5c417499c2301bac8d9cbc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  arrowPrefab: {fileID: 400000, guid: cff4c024d20095a458a66e6e0d47bf1b, type: 3}
 --- !u!1 &6716255138115598280
 GameObject:
   m_ObjectHideFlags: 0

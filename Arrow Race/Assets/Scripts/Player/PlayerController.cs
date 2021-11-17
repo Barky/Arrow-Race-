@@ -6,7 +6,7 @@ using UnityEngine.UI;
 public class PlayerController : MonoBehaviour
 {
     //[SerializeField]
-    private float swerveSpeed = 1250f, platformWidth = 5.5f, movementSpeed = 5f;
+    private float swerveSpeed = 400f, platformWidth = 5.5f, movementSpeed = 5f;
     private bool isGameStarted;
     Vector3 movementPosition, firstposition;
     private Transform lastposition;

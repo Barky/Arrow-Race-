@@ -5,13 +5,11 @@ using TMPro;
 
 public class EnemyController : MonoBehaviour
 {
-
+    ClonePositionControler clonePositionControler;
     private TextMeshPro healthText;
     private int minHealth = 2, maxHealth = 6, health;
-    [SerializeField] private Transform playercloneprefab;
     private Transform player;
-    public int clonenumber = 0;
-    public string CloneStatus;
+    
 
     private float rightoffsetX = 1.5f, leftoffsetX = -1.5f, offsetY, offsetZ = 2f;
 
@@ -21,6 +19,8 @@ public class EnemyController : MonoBehaviour
     {
         health = Random.Range(minHealth, maxHealth);
         player = GameObject.FindGameObjectWithTag("Player").transform;
+
+        clonePositionControler = GameObject.FindGameObjectWithTag("Player").GetComponent<ClonePositionControler>();
 
         string nameOfParent = gameObject.name;
         string nameOfchild = "Text";
@@ -46,13 +46,13 @@ public class EnemyController : MonoBehaviour
     }
     private void Update()
     {
-
+        if (healthText){
         healthText.text = health.ToString();
-        if (gameObject.tag == "PlayerClone") 
-        {
-                transform.position = new Vector3(player.transform.position.x +2f, player.transform.position.y, player.transform.position.z - 0.5f);
-                
         }
+        if (gameObject.tag == "PlayerClone"){
+            transform.position = clonePositionControler.cloneBehaviour[0].Cube.transform.position;
+        }
+
     }
 
     private void OnTriggerEnter(Collider target)
@@ -70,9 +70,10 @@ public class EnemyController : MonoBehaviour
                 else if (gameObject.tag == "EnemyPlayer")
                 {
                     Destroy(healthText);
-                    //float distancex = gameObject.transform.position.x - player.transform.position.x;
+                    
                     transform.SetParent(player, true);
                     transform.tag = "PlayerClone";
+                    transform.position = clonePositionControler.cloneBehaviour[0].Cube.transform.position;
                     
                     
 

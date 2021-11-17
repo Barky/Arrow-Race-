@@ -28,8 +28,9 @@ public class PlayerBehaviour : MonoBehaviour
     }
     private void Start()
     {
-
+        if (gameObject.tag == "Player" || gameObject.tag == "PlayerClone"){
         StartCoroutine(constantShoot());
+        }
     }
     
 
@@ -45,24 +46,4 @@ public class PlayerBehaviour : MonoBehaviour
                 yield return new WaitForSeconds(arrow_cooldown);
             }
         
-    }
-    private void Update()
-    {
-        //isGameStarted = GameManager.instance.isLevelStarted;
-    }
-    //public void Shoot()
-    //{
-
-    //    //if you want to arrange the position, change these parameters
-    //    //rockposition.x += 1f;
-    //    //rockposition.y += 1f;
-    //    //rockposition.z += 1f;
-
-    //    Transform newRock = (Transform)Instantiate(RockPrefab, rockposition, Quaternion.identity);
-    //    //newRock.GetComponent<Rigidbody>().AddForce(transform.forward * rockforce);
-    //    //newRock.parent = transform;
-
-
-    //}
-
-}
+    }}
