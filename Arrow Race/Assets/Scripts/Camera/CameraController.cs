@@ -4,10 +4,10 @@ using UnityEngine;
 
 public class CameraController : MonoBehaviour
 {
-    [SerializeField] private float offsetx = 1.6f;
-    [SerializeField] private float constanty = 12.26f;
-    [SerializeField] private float offsetz = -7.07f;
-    [SerializeField] private float cameralerptime = 0.05f;
+    private float offsetx = 1.6f;
+     private float constanty = 12.26f;
+    private float offsetz = -8.67f;
+     private float cameralerptime = 0.03f;
 
     private Transform Player;
 

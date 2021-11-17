@@ -8,9 +8,14 @@ public class EnemyController : MonoBehaviour
 
     private TextMeshPro healthText;
     private int minHealth = 2, maxHealth = 6, health;
-    [SerializeField] private Transform playerprefab;
+    [SerializeField] private Transform playercloneprefab;
     private Transform player;
+    public int clonenumber = 0;
+    public string CloneStatus;
 
+    private float rightoffsetX = 1.5f, leftoffsetX = -1.5f, offsetY, offsetZ = 2f;
+
+    private int rightxno=0, leftxno=0, backno=0;
 
     private void Awake()
     {
@@ -43,6 +48,11 @@ public class EnemyController : MonoBehaviour
     {
 
         healthText.text = health.ToString();
+        if (gameObject.tag == "PlayerClone") 
+        {
+                transform.position = new Vector3(player.transform.position.x +2f, player.transform.position.y, player.transform.position.z - 0.5f);
+                
+        }
     }
 
     private void OnTriggerEnter(Collider target)
@@ -59,19 +69,23 @@ public class EnemyController : MonoBehaviour
                 }
                 else if (gameObject.tag == "EnemyPlayer")
                 {
-                    Destroy(gameObject);
-                    // eðer enemyplayer ise yanýna katýlma scripti yaz
-                    Vector3 newposition = new Vector3(player.transform.position.x + Random.Range(-2f, 2f), player.transform.position.y, player.transform.position.z);
-                    Transform newplayer = (Transform)Instantiate(playerprefab, newposition, Quaternion.identity);
+                    Destroy(healthText);
+                    //float distancex = gameObject.transform.position.x - player.transform.position.x;
+                    transform.SetParent(player, true);
+                    transform.tag = "PlayerClone";
+                    
+                    
+
 
                 }
             }
         }
     }
-
+    
     private void OnCollisionEnter(Collision target)
     {
-        if (target.gameObject.tag == "Player")
+        
+        if (gameObject.tag == "EnemyPlayer" && target.gameObject.tag == "Player")
         {
             Time.timeScale = 0;
             // level bitme scripti yaz

@@ -8,9 +8,9 @@
       "url": "https://packages.unity.com"
     },
     "com.unity.2d.sprite": {
-      "version": "file:D:/Program Files/2020.3.18f1/Editor/Data/Resources/PackageManager/BuiltInPackages/com.unity.2d.sprite",
+      "version": "1.0.0",
       "depth": 0,
-      "source": "local",
+      "source": "builtin",
       "dependencies": {}
     },
     "com.unity.collab-proxy": {

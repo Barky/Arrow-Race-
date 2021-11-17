@@ -6,7 +6,7 @@ using UnityEngine.UI;
 public class PlayerController : MonoBehaviour
 {
     //[SerializeField]
-    private float swerveSpeed = 50f, platformWidth = 5.5f, movementSpeed = 5f;
+    private float swerveSpeed = 1250f, platformWidth = 5.5f, movementSpeed = 5f;
     private bool isGameStarted;
     Vector3 movementPosition, firstposition;
     private Transform lastposition;
@@ -40,7 +40,6 @@ public class PlayerController : MonoBehaviour
         while (levelslider.value < 100)
         {
             levelslider.value += 2f;
-            Debug.Log(levelslider.value);
             yield return new WaitForSeconds(1f);
         }
         yield return null;
@@ -69,5 +68,6 @@ public class PlayerController : MonoBehaviour
         newx = Mathf.Clamp(newx, -platformWidth, platformWidth);
         movementPosition = new Vector3(newx, transform.position.y, transform.position.z + movementSpeed * Time.deltaTime);
         transform.position = movementPosition;
+
     }
 }

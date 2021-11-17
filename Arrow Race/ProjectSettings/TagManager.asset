@@ -13,6 +13,7 @@ TagManager:
   - EnemyDummy
   - EnemyPlayer
   - EnemyText
+  - PlayerClone
   layers:
   - Default
   - TransparentFX
