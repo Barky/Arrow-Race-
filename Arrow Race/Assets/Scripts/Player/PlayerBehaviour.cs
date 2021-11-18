@@ -28,9 +28,11 @@ public class PlayerBehaviour : MonoBehaviour
     }
     private void Start()
     {
-        if (gameObject.tag == "Player" || gameObject.tag == "PlayerClone"){
+        
         StartCoroutine(constantShoot());
-        }
+        
+        
+        
     }
     
 
@@ -45,5 +47,5 @@ public class PlayerBehaviour : MonoBehaviour
                 newArrow.parent = gameObject.transform;
                 yield return new WaitForSeconds(arrow_cooldown);
             }
-        
-    }}
+    }
+    }

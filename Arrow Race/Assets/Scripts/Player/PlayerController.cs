@@ -50,7 +50,6 @@ public class PlayerController : MonoBehaviour
         
         
         float newx = 0, swipeDelta = 0;
-        Debug.Log(isGameStarted);
         // if on mobile
         if(Input.touchCount > 0 && Input.GetTouch(0).phase == TouchPhase.Moved)
         {
