@@ -9,6 +9,7 @@ public class GameManager : MonoBehaviour
     [HideInInspector]
     public bool isLevelStarted;
 
+    private
     private void Awake()
     {
         MakeSingleton();

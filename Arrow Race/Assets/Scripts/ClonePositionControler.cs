@@ -28,8 +28,6 @@ public class ClonePositionControler : MonoBehaviour
             cloneBehaviour.Add(new CloneBehaviour(GameObject.Find(clonepath+ "Place0").transform, false));
             cloneBehaviour.Add(new CloneBehaviour(GameObject.Find(clonepath+ "Place1").transform, false));
             cloneBehaviour.Add(new CloneBehaviour(GameObject.Find(clonepath+ "Place2").transform, false));
-            cloneBehaviour.Add(new CloneBehaviour(GameObject.Find(clonepath+ "Place3").transform, false));
-            cloneBehaviour.Add(new CloneBehaviour(GameObject.Find(clonepath+ "Place4").transform, false));
         }
         private void Update()
         {
