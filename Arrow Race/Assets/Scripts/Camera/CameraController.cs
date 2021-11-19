@@ -4,9 +4,9 @@ using UnityEngine;
 
 public class CameraController : MonoBehaviour
 {
-    private float offsetx = 1.6f;
-     private float constanty = 12.26f;
-    private float offsetz = -8.67f;
+    private float offsetx = 0f;
+     private float constanty = 13.2f;
+    private float offsetz = -9.5f;
      private float cameralerptime = 0.03f;
 
     private Transform Player;
