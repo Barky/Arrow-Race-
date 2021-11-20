@@ -6,11 +6,12 @@ using UnityEngine.UI;
 public class PlayerController : MonoBehaviour
 {
     //[SerializeField]
-    private float swerveSpeed = 400f, platformWidth = 5.5f, movementSpeed = 5f;
+    private float swerveSpeed = 1200f, platformWidth = 5.5f, movementSpeed = 5f;
     private bool isGameStarted;
     Vector3 movementPosition, firstposition;
     private Transform lastposition;
     Slider levelslider;
+    Animator anim;
 
     //public void sliderchange()
     //{
@@ -23,10 +24,13 @@ public class PlayerController : MonoBehaviour
         levelslider = GameObject.Find("/UICamera/Canvas/in_level_panel/level_bar").GetComponent<Slider>();
         firstposition = transform.position;
         lastposition = GameObject.Find("/Platform/LevelEnd").transform;
+        anim = GetComponent<Animator>();
+        //GameManager.instance.CheckPlayerPrefs();
         
     }
     private void Start()
     {
+        
         if (gameObject.tag == "Player")
         {
             levelslider.value = 6f;
@@ -48,7 +52,9 @@ public class PlayerController : MonoBehaviour
     {
         // sliderchange();
         
-        
+        if(!GameManager.instance.LevelStarted){
+            return;
+        }
         float newx = 0, swipeDelta = 0;
         // if on mobile
         if(Input.touchCount > 0 && Input.GetTouch(0).phase == TouchPhase.Moved)
@@ -67,6 +73,7 @@ public class PlayerController : MonoBehaviour
         newx = Mathf.Clamp(newx, -platformWidth, platformWidth);
         movementPosition = new Vector3(newx, transform.position.y, transform.position.z + movementSpeed * Time.deltaTime);
         transform.position = movementPosition;
-
+        anim.SetBool("gameStarted", true);
+    
     }
 }

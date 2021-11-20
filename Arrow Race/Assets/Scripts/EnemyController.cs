@@ -5,7 +5,7 @@ using TMPro;
 
 public class EnemyController : MonoBehaviour
 {
-
+    Animator m_anim;
     ArrowController arrowcont;
     ClonePositionControler clonePositionControler;
     private TextMeshPro healthText;
@@ -32,7 +32,7 @@ public class EnemyController : MonoBehaviour
 
     private void Awake()
     {
-        
+        m_anim = GetComponent<Animator>();
         health = Random.Range(minHealth, maxHealth);
         player = GameObject.FindGameObjectWithTag("Player").transform;
 
@@ -70,8 +70,6 @@ public class EnemyController : MonoBehaviour
             
         }
 
-        Debug.Log(transform.position - new Vector3(0, 0, 1f));
-
     }
 
     private void OnTriggerEnter(Collider target)
@@ -92,7 +90,7 @@ public class EnemyController : MonoBehaviour
                     
                     transform.SetParent(player, true);
                     transform.tag = "PlayerClone";
-
+                    m_anim.SetBool("iscloned", true);
 
                     for(int i = 0; i <clonePositionControler.cloneBehaviour.Count; i++)
                     {
@@ -107,10 +105,6 @@ public class EnemyController : MonoBehaviour
                     }
                     
                     StartCoroutine(constantShoot());
-
-                    
-                    
-
 
                 }
             }
@@ -128,7 +122,20 @@ public class EnemyController : MonoBehaviour
                 yield return new WaitForSeconds(arrow_cooldown);
             }
     }
+            void FillingtheBlanks()
+        {
+            for (int i=0 ; i<clonePositionControler.cloneBehaviour.Count-2 ; i++ ){
+                if (!clonePositionControler.cloneBehaviour[i].IsFull){
+                for (int k = i+1; k<clonePositionControler.cloneBehaviour.Count-1;k++){
+                        if (clonePositionControler.cloneBehaviour[k].IsFull){
 
+                           // to be filled
+                        }
+
+
+                }}
+            }
+        }
     private void OnCollisionEnter(Collision target)
     {
         if (gameObject.tag == "PlayerClone" && target.gameObject.tag == "EnemyPlayer")

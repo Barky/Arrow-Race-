@@ -7,7 +7,6 @@ public class ArrowController : MonoBehaviour
     
     private float lifetime =100f;
     private float speed = 15f;
-
     private float startX, startY, startZ;
 
     private void Awake()
@@ -25,22 +24,27 @@ public class ArrowController : MonoBehaviour
     {
        transform.position = new Vector3 (startX, startY, transform.position.z + speed * Time.deltaTime);
 
-        if (transform.position.z - startZ > 50f) // kaç birim sonra yok olacaðýný belirle
+        if (transform.position.z - startZ > 50f) // kaï¿½ birim sonra yok olacaï¿½ï¿½nï¿½ belirle
         {
             Destroy(gameObject);
         }
     }
     IEnumerator DestroyArrow()
     {
+        
         yield return new WaitForSeconds(lifetime);
         Destroy(gameObject);
     }
 
-    private void OnTriggerEnter(Collider target)//baþka bir objenin collider ý arrowun triggerýna çarparsa
+    private void OnTriggerEnter(Collider target)//baï¿½ka bir objenin collider ï¿½ arrowun triggerï¿½na ï¿½arparsa
     {
         if (target.tag == "EnemyDummy" || target.tag == "EnemyPlayer" || target.tag == "Obstacle")
         {
             Destroy(gameObject);
+        }
+
+        if (target.tag == "GoldBox"){
+
         }
     }
 }

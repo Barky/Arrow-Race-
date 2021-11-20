@@ -42,10 +42,17 @@ public class PlayerBehaviour : MonoBehaviour
        
             while (true)
             {
+                if(GameManager.instance.LevelStarted)
+                {
                 arrowpos = new Vector3(transform.position.x + arrowx, transform.position.y + arrowy, transform.position.z + arrowz);
                 Transform newArrow = (Transform)Instantiate(arrowPrefab, arrowpos, Quaternion.identity);
                 newArrow.parent = gameObject.transform;
                 yield return new WaitForSeconds(arrow_cooldown);
+                }
+                else
+                {
+                    yield return null;            
+                }
             }
     }
     }

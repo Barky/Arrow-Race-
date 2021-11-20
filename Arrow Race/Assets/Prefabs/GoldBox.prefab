@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 8946572205062629302}
   - component: {fileID: 8676932523127960834}
   - component: {fileID: 5794771424312268085}
+  - component: {fileID: 7025954838698965580}
   m_Layer: 0
   m_Name: GoldBox
   m_TagString: GoldBox
@@ -112,3 +113,15 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
+--- !u!114 &7025954838698965580
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 781706919678536550}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9c19999974aeaf84fb51d96be9e9b360, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

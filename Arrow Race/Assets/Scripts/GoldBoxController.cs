@@ -4,12 +4,23 @@ using UnityEngine;
 
 public class GoldBoxController : MonoBehaviour
 {
-    private void OnCollisionEnter(Collision target)
-    {
+    private int goldHealth = 2;
+    private int totalgold;
+
+
+    private void OnTriggerEnter(Collider target) {
         if(target.gameObject.tag == "Weapon")
         {
+            Debug.Log("çarptı " + goldHealth.ToString());
+            goldHealth --;
+            
+            if (goldHealth == 0)
+            {
+
                 Destroy(gameObject);
-                // gold ++;
+                totalgold ++;
+                }
+                
         }
     }
 }
