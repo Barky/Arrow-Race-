@@ -6,7 +6,7 @@ using TMPro;
 public class EnemyController : MonoBehaviour
 {
     Animator m_anim;
-    ArrowController arrowcont;
+    
     ClonePositionControler clonePositionControler;
     private TextMeshPro healthText;
     private int minHealth = 2, maxHealth = 6, health;
@@ -27,7 +27,6 @@ public class EnemyController : MonoBehaviour
     private float  arrow_cooldown = 0.4f;
     
 
-    private float rightoffsetX = 1.5f, leftoffsetX = -1.5f, offsetY, offsetZ = 2f;
 
 
     private void Awake()
@@ -65,8 +64,11 @@ public class EnemyController : MonoBehaviour
         healthText.text = health.ToString();
         }
         if (gameObject.tag == "PlayerClone"){
+            m_anim.SetBool("isCloned", true);
             transform.position = clonePositionControler.cloneBehaviour[cloneNo].Cube.transform.position;
-
+            if (GameManager.instance.levelFinished){
+                m_anim.SetBool("isCloned", false);
+            }
             
         }
 
@@ -90,7 +92,6 @@ public class EnemyController : MonoBehaviour
                     
                     transform.SetParent(player, true);
                     transform.tag = "PlayerClone";
-                    m_anim.SetBool("iscloned", true);
 
                     for(int i = 0; i <clonePositionControler.cloneBehaviour.Count; i++)
                     {
@@ -147,7 +148,7 @@ public class EnemyController : MonoBehaviour
 
         if (gameObject.tag == "EnemyPlayer" && target.gameObject.tag == "Player")
         {
-            Time.timeScale = 0;
+            GameManager.instance.playerDied = true;
             // level bitme scripti yaz
         }
 

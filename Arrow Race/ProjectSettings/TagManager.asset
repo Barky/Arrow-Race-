@@ -14,6 +14,7 @@ TagManager:
   - EnemyPlayer
   - EnemyText
   - PlayerClone
+  - Boss
   layers:
   - Default
   - TransparentFX

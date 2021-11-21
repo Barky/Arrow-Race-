@@ -23,8 +23,8 @@ public class ArrowController : MonoBehaviour
     private void Update()
     {
        transform.position = new Vector3 (startX, startY, transform.position.z + speed * Time.deltaTime);
-
-        if (transform.position.z - startZ > 50f) // ka� birim sonra yok olaca��n� belirle
+        
+        if (transform.position.z - startZ > 50f ||  GameManager.instance.playerDied) // ka� birim sonra yok olaca��n� belirle
         {
             Destroy(gameObject);
         }

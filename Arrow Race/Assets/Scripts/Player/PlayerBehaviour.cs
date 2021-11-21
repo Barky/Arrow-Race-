@@ -17,7 +17,7 @@ public class PlayerBehaviour : MonoBehaviour
 
     private float arrowx=0f, arrowy = 2.5f, arrowz = 2.5f;
 
-    private float  arrow_cooldown = 0.4f;
+    private float  arrow_cooldown = 0.7f;
 
     private void Awake()
     {
@@ -35,7 +35,16 @@ public class PlayerBehaviour : MonoBehaviour
         
     }
     
-
+        private void OnCollisionEnter(Collision target)
+    {
+        if (target.gameObject.tag == "EnemyPlayer" || target.gameObject.tag == "EnemyDummy")
+        {
+            if(GameManager.instance.currentcloneno == 0 && gameObject.tag == "Player"){
+               GameManager.instance.playerDied = true;
+            }
+            
+        }
+    }
     
     IEnumerator constantShoot()
     {
