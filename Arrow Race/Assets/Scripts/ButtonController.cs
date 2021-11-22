@@ -7,6 +7,7 @@ public class ButtonController : MonoBehaviour
     public void LoseRestartLevel()
     {
         GameManager.instance.Restart();
+        
     }
 
     public void NextLevel(){

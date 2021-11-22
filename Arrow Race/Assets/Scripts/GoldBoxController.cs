@@ -15,7 +15,7 @@ public class GoldBoxController : MonoBehaviour
             
             if (goldHealth == 0)
             {
-                GameManager.instance.IncrementGold();
+               GameplayManager.instance.IncrementGold();
                 Destroy(gameObject);
                
                 }

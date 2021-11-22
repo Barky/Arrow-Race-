@@ -6,7 +6,7 @@ using UnityEngine.UI;
 public class PlayerController : MonoBehaviour
 {
     //[SerializeField]
-    private float swerveSpeed = 1300f, platformWidth = 5.5f, movementSpeed = 5f, sliderchange, transformlength;
+    private float swerveSpeed = 1300f, platformWidth = 5.5f, movementSpeed = 4f, sliderchange, transformlength;
     private bool isGameStarted;
     Vector3 movementPosition, firstposition;
     private Transform lastposition;
@@ -26,7 +26,6 @@ public class PlayerController : MonoBehaviour
         lastposition = GameObject.Find("/LevelEnd").transform;
         
         anim = GetComponent<Animator>();
-        //GameManager.instance.CheckPlayerPrefs();
         
     }
     private void Start()
@@ -105,7 +104,7 @@ public class PlayerController : MonoBehaviour
         yield return new WaitForSeconds(2f);
         lastpos = transform.position.z;
         onesecdist = lastpos - firstpos;
-        Debug.Log("one sec dist: "+onesecdist+"transformlegnth: "+transformlength+ "sliderch: "+94f * onesecdist / transformlength);
+       // Debug.Log("one sec dist: "+onesecdist+"transformlegnth: "+transformlength+ "sliderch: "+94f * onesecdist / transformlength);
         sliderchange += (94f * onesecdist / transformlength);
         levelslider.value += sliderchange;
         }

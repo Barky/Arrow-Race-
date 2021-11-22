@@ -7,7 +7,6 @@ public class ClonePositionControler : MonoBehaviour
             
     string clonepath = "Player/ClonePlaces/";    
     public List <CloneBehaviour> cloneBehaviour = new List<CloneBehaviour>();
-    private int _currentcloneno = 0;
 
 
      public class CloneBehaviour
@@ -34,31 +33,14 @@ public class ClonePositionControler : MonoBehaviour
         private void Update()
         {
             ElementAdd();
-            
-
-        }
-        void cloneNoFinder(){
-            
-            for(int i = 0; i < cloneBehaviour.Count ; i++ )
-            {
-                if (cloneBehaviour[i].IsFull == true)
-                {
-                    _currentcloneno++;
-                }
-
-            }
-            GameManager.instance.currentcloneno = _currentcloneno;
-
-
         }
 
         void ElementAdd(){
-            Debug.Log("dizi eleman sayısı: "+cloneBehaviour.Count);
             int tempno = 0;
 
         for(int i = 0; i < cloneBehaviour.Count ; i++ )
             {
-                if (cloneBehaviour[i].IsFull == true)
+                if (cloneBehaviour[i].IsFull)
                 {
                     tempno++;
                 }

@@ -11,13 +11,14 @@ public class PlayerBehaviour : MonoBehaviour
 
     private Transform arrowparent;
 
-    Vector3 arrowpos;
+    private Vector3 bossposition, arrowpos;
+    
+    public Transform boss, Levelend;
 
 
+    private float arrowx=0f, arrowy = 1f, arrowz = 2.5f;
 
-    private float arrowx=0f, arrowy = 2.5f, arrowz = 2.5f;
-
-    private float  arrow_cooldown = 0.7f;
+    private float  arrow_cooldown = 0.3f;
 
     private void Awake()
     {
@@ -28,11 +29,19 @@ public class PlayerBehaviour : MonoBehaviour
     }
     private void Start()
     {
-        
+        bossposition = new Vector3(5f, 0.89f, 177f);
         StartCoroutine(constantShoot());
         
         
         
+    }
+    private void Update() {
+        if ((Levelend.transform.position - transform.position).magnitude > 50f){
+            Debug.Log("çalıştı");
+            GameObject bossins = Instantiate(boss, bossposition, Quaternion.identity);
+            bossins.name = "spider";
+            // spider ı instantiate etmeye uğraş, beceremedim şimdi
+        }
     }
     
         private void OnCollisionEnter(Collision target)

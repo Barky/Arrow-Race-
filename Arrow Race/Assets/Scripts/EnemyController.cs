@@ -6,7 +6,7 @@ using TMPro;
 public class EnemyController : MonoBehaviour
 {
     Animator m_anim;
-    
+    public static EnemyController instance;
     ClonePositionControler clonePositionControler;
     private TextMeshPro healthText;
     private int minHealth = 2, maxHealth = 6, health;
@@ -31,6 +31,7 @@ public class EnemyController : MonoBehaviour
 
     private void Awake()
     {
+        instance = this;
         m_anim = GetComponent<Animator>();
         health = Random.Range(minHealth, maxHealth);
         player = GameObject.FindGameObjectWithTag("Player").transform;
@@ -60,6 +61,7 @@ public class EnemyController : MonoBehaviour
     }
     private void Update()
     {
+        Debug.Log(cloneNo);
         if (healthText){
         healthText.text = health.ToString();
         }
@@ -71,9 +73,22 @@ public class EnemyController : MonoBehaviour
             }
             
         }
-
+        if (gameObject.tag == "PlayerClone"){
+            FillintheBlanks(cloneNo);
+        }
     }
 
+    void FillintheBlanks(int no){
+        Debug.Log("çalıştı");
+        for (int i = 0; i < no; i++)
+        {
+            if (!clonePositionControler.cloneBehaviour[i].IsFull){
+                transform. position = clonePositionControler.cloneBehaviour[i].Cube.transform.position;
+                clonePositionControler.cloneBehaviour[i].IsFull=true;
+                clonePositionControler.cloneBehaviour[cloneNo].IsFull = false;
+            }
+        }
+    }
     private void OnTriggerEnter(Collider target)
     {
         if (target.tag == "Weapon")
@@ -100,6 +115,7 @@ public class EnemyController : MonoBehaviour
                             
                             transform.position = clonePositionControler.cloneBehaviour[i].Cube.transform.position;
                             clonePositionControler.cloneBehaviour[i].IsFull = true;
+                            
                             cloneNo = i;
                             break;
                         }
@@ -123,20 +139,7 @@ public class EnemyController : MonoBehaviour
                 yield return new WaitForSeconds(arrow_cooldown);
             }
     }
-            void FillingtheBlanks()
-        {
-            for (int i=0 ; i<clonePositionControler.cloneBehaviour.Count-2 ; i++ ){
-                if (!clonePositionControler.cloneBehaviour[i].IsFull){
-                for (int k = i+1; k<clonePositionControler.cloneBehaviour.Count-1;k++){
-                        if (clonePositionControler.cloneBehaviour[k].IsFull){
-
-                           // to be filled
-                        }
-
-
-                }}
-            }
-        }
+            
     private void OnCollisionEnter(Collision target)
     {
         if (gameObject.tag == "PlayerClone" && target.gameObject.tag == "EnemyPlayer")
