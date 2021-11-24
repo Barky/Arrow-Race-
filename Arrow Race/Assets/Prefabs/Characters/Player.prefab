@@ -711,7 +711,7 @@ Animator:
   m_GameObject: {fileID: 6050799781908289412}
   m_Enabled: 1
   m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: 89b822a205ceb374981fd48a3b2014c4, type: 2}
+  m_Controller: {fileID: 0}
   m_CullingMode: 1
   m_UpdateMode: 0
   m_ApplyRootMotion: 1
@@ -733,6 +733,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   arrowPrefab: {fileID: 400000, guid: cff4c024d20095a458a66e6e0d47bf1b, type: 3}
+  boss: {fileID: 0}
+  Levelend: {fileID: 0}
 --- !u!114 &919448696568038067
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -772,8 +774,8 @@ BoxCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 0.7, y: 3, z: 1}
-  m_Center: {x: 0, y: 1.44, z: 0}
+  m_Size: {x: 0.36728466, y: 2.7108157, z: 1}
+  m_Center: {x: 0.008400917, y: 1.4063092, z: 0}
 --- !u!1 &6716255138115598280
 GameObject:
   m_ObjectHideFlags: 0

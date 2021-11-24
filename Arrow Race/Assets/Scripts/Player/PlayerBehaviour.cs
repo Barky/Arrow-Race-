@@ -5,7 +5,7 @@ using UnityEngine;
 public class PlayerBehaviour : MonoBehaviour
 {
 
-    private bool isGameStarted;
+    private bool isGameStarted, spiderspawned = true;
     [SerializeField]
     private Transform arrowPrefab;
 
@@ -13,10 +13,12 @@ public class PlayerBehaviour : MonoBehaviour
 
     private Vector3 bossposition, arrowpos;
     
-    public Transform boss, Levelend;
+    public Transform boss;
+
+    private Transform Levelend;
 
 
-    private float arrowx=0f, arrowy = 1f, arrowz = 2.5f;
+    private float arrowx=0f, arrowy = 1f, arrowz = 2.5f, firstpos;
 
     private float  arrow_cooldown = 0.3f;
 
@@ -24,7 +26,9 @@ public class PlayerBehaviour : MonoBehaviour
     {
        // _GameManager = GameObject.Find("GameManager").GetComponent<GameManager>();
         arrowpos = new Vector3(transform.position.x + arrowx, transform.position.y + arrowy, transform.position.z + arrowz);
+        Levelend = GameObject.Find("/LevelEnd").transform;
         arrowparent = transform;
+        firstpos = transform.position.z;
 
     }
     private void Start()
@@ -36,11 +40,13 @@ public class PlayerBehaviour : MonoBehaviour
         
     }
     private void Update() {
-        if ((Levelend.transform.position - transform.position).magnitude > 50f){
-            Debug.Log("çalıştı");
-            GameObject bossins = Instantiate(boss, bossposition, Quaternion.identity);
+        if (Levelend.transform.position.z -transform.position.z > 50f && spiderspawned)
+        {
+
+            Transform bossins = Instantiate(boss, bossposition, Quaternion.identity);
             bossins.name = "spider";
-            // spider ı instantiate etmeye uğraş, beceremedim şimdi
+            bossins.Rotate(0f, 180f, 0f, Space.Self);
+            spiderspawned = false;
         }
     }
     

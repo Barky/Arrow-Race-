@@ -2022,6 +2022,10 @@ PrefabInstance:
       propertyPath: boss
       value: 
       objectReference: {fileID: 345433806437011649, guid: 46fce81e6ef032348b665188058187c3, type: 3}
+    - target: {fileID: 6053802412080382663, guid: 1545019f5dab65148b6c69ffb8604532, type: 3}
+      propertyPath: Levelend
+      value: 
+      objectReference: {fileID: 790968177}
     - target: {fileID: 6447438308690421370, guid: 1545019f5dab65148b6c69ffb8604532, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
       value: 2.9196837
