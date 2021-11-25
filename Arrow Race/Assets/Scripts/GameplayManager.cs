@@ -14,7 +14,7 @@ public class GameplayManager : MonoBehaviour
     public int goldNo = 0, levelNo, inlevelgoldno;
     private string canvasshortcut = "/UICamera/Canvas";
 
-
+    public Transform playerprefab;
 
     private void Awake() {
         MakeInstance();
@@ -26,9 +26,6 @@ public class GameplayManager : MonoBehaviour
         levelText = GameObject.Find(canvasshortcut + "/in_level_panel/Level/LevelNo").GetComponent<Text>();
         panelgoldtotalui = GameObject.Find(canvasshortcut + "/Win/Coin/Text").GetComponent<Text>(); // top right corner
         panelgoldlevelui = GameObject.Find(canvasshortcut + "/Win/Background/Text").GetComponent<Text>(); // middle
-}
-private void Start() {
-    
 }
     void gameStart(){
         if(Input.touchCount > 0 || Input.GetMouseButtonDown(0)){
@@ -59,6 +56,7 @@ private void Start() {
         SceneManager.sceneLoaded -= onSceneWasLoaded;
     }
     void onSceneWasLoaded(Scene scene, LoadSceneMode mode){
+        CreatePlayer();
     inlevelgoldno = 0;
     levelNo = PlayerPrefs.GetInt("Level");
     goldNo = PlayerPrefs.GetInt("Gold");
@@ -100,6 +98,11 @@ private void Start() {
             PlayerPrefs.SetInt("Level", levelNo);
             PlayerPrefs.Save();
         }
+    }
+    void CreatePlayer()
+    {
+        Transform player = Instantiate(playerprefab, Vector3.zero, Quaternion.identity);
+        player.name = "Player";
     }
     void MakeInstance()
     {

@@ -13,7 +13,7 @@ public class BossController : MonoBehaviour
     private void Awake() {
         healthUI = GameObject.Find(this.gameObject.name + "/Text").GetComponent<TextMeshPro>();
         bossHealth = Random.Range(minBossHealth, maxBossHealth);
-        transform.position = new Vector3(-5f, transform.position.y, transform.position.z);
+        //transform.position = new Vector3(-5f, transform.position.y, transform.position.z);
         newx = transform.position.x;
         healthUI.text = bossHealth.ToString();
 
@@ -40,7 +40,7 @@ public class BossController : MonoBehaviour
     IEnumerator destroyin(){
         GameManager.instance.LevelStarted = false;
         GameManager.instance.LevelEndGame = false;
-        yield return new WaitForSeconds(0.5f);
+        yield return new WaitForSeconds(1f);
         Destroy(gameObject);
         
         

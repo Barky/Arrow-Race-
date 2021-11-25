@@ -38,13 +38,10 @@ public class ArrowController : MonoBehaviour
 
     private void OnTriggerEnter(Collider target)//ba�ka bir objenin collider � arrowun trigger�na �arparsa
     {
-        if (target.tag == "EnemyDummy" || target.tag == "EnemyPlayer" || target.tag == "Obstacle")
+        if (target.tag == "EnemyDummy" || target.tag == "EnemyPlayer" || target.tag == "Obstacle" || target.tag == "GoldBox" )
         {
             Destroy(gameObject);
         }
 
-        if (target.tag == "GoldBox"){
-
-        }
     }
 }

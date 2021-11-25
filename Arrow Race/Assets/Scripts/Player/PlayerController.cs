@@ -8,8 +8,9 @@ public class PlayerController : MonoBehaviour
     //[SerializeField]
     private float swerveSpeed = 1300f, platformWidth = 5.5f, movementSpeed = 4f, sliderchange, transformlength;
     private bool isGameStarted;
-    Vector3 movementPosition, firstposition;
+    private float firstposition,lastpositionz, sliderchangez;
     private Transform lastposition;
+    private Vector3 movementPosition;
     Slider levelslider;
     Animator anim;
 
@@ -22,22 +23,19 @@ public class PlayerController : MonoBehaviour
     private void Awake()
     {
         levelslider = GameObject.Find("/UICamera/Canvas/in_level_panel/level_bar").GetComponent<Slider>();
-        firstposition = transform.position;
-        lastposition = GameObject.Find("/LevelEnd").transform;
-        
+        firstposition = transform.position.z;
+        Transform levelend = GameObject.Find("/LevelEnd").transform;
+        lastpositionz = levelend.transform.position.z;
         anim = GetComponent<Animator>();
         
     }
     private void Start()
     {
-    
-         if (gameObject.tag == "Player")
-         {
-             levelslider.value = 6f;
-            //  StartCoroutine(sliderchange());
-         }
-         transformlength = lastposition.position.z - firstposition.z;
-         StartCoroutine(onesecdistance());
+
+        levelslider.value = 0.2f;
+         transformlength = lastpositionz - firstposition;
+        Debug.Log(transformlength);
+      //   StartCoroutine(onesecdistance());
 
     }
     void slidermove(float distancemade){
@@ -46,16 +44,6 @@ public class PlayerController : MonoBehaviour
         
         }
     }
-    // IEnumerator sliderchange()
-    // {
-        
-    //     while (levelslider.value < 100)
-    //     {
-    //         levelslider.value += 2f;
-    //         yield return new WaitForSeconds(1f);
-    //     }
-    //     yield return null;
-    // }
     private void Update()
     {
         if (GameManager.instance.levelFinished){
@@ -68,7 +56,7 @@ public class PlayerController : MonoBehaviour
         anim.SetBool("gameStarted", true);
         float newx = 0, swipeDelta = 0;
         // if on mobile
-        if(Input.touchCount > 0 && Input.GetTouch(0).phase == TouchPhase.Moved)
+        if(Input.touchCount == 1 && Input.GetTouch(0).phase == TouchPhase.Moved)
         {
             swipeDelta = Input.GetTouch(0).deltaPosition.x / Screen.width;
         }
@@ -87,28 +75,13 @@ public class PlayerController : MonoBehaviour
             transform.position = movementPosition;
             return;
         }
+
         movementPosition = new Vector3(newx, transform.position.y, transform.position.z + movementSpeed * Time.deltaTime);
-        // slidermove((movementPosition.z - transform.position.z));
+        sliderchangez = ((movementPosition.z - transform.position.z) * 1.8f) / transformlength;
+        levelslider.value += sliderchangez;
         transform.position = movementPosition;
         
         
     
-    }
-    IEnumerator onesecdistance()
-    {
-        float firstpos, lastpos, onesecdist;
-        while(true){
-        if ( GameManager.instance.LevelStarted && !GameManager.instance.LevelEndGame)
-        {
-         firstpos = transform.position.z;
-        yield return new WaitForSeconds(2f);
-        lastpos = transform.position.z;
-        onesecdist = lastpos - firstpos;
-       // Debug.Log("one sec dist: "+onesecdist+"transformlegnth: "+transformlength+ "sliderch: "+94f * onesecdist / transformlength);
-        sliderchange += (94f * onesecdist / transformlength);
-        levelslider.value += sliderchange;
-        }
-        yield return null;
-        }
     }
 }

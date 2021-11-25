@@ -18,14 +18,15 @@ public class PlayerBehaviour : MonoBehaviour
     private Transform Levelend;
 
 
-    private float arrowx=0f, arrowy = 1f, arrowz = 2.5f, firstpos;
+    private float arrowx=0f, minarrowy = 0.5f, maxarrowy = 1.2f, arrowy, arrowz = 2.5f, firstpos;
 
     private float  arrow_cooldown = 0.3f;
 
     private void Awake()
     {
+        
        // _GameManager = GameObject.Find("GameManager").GetComponent<GameManager>();
-        arrowpos = new Vector3(transform.position.x + arrowx, transform.position.y + arrowy, transform.position.z + arrowz);
+        
         Levelend = GameObject.Find("/LevelEnd").transform;
         arrowparent = transform;
         firstpos = transform.position.z;
@@ -40,7 +41,9 @@ public class PlayerBehaviour : MonoBehaviour
         
     }
     private void Update() {
-        if (Levelend.transform.position.z -transform.position.z > 50f && spiderspawned)
+        arrowy = Random.Range(minarrowy, maxarrowy);
+        arrowpos = new Vector3(transform.position.x + arrowx, transform.position.y + arrowy, transform.position.z + arrowz);
+        if (Levelend.transform.position.z -transform.position.z < 120f && spiderspawned)
         {
 
             Transform bossins = Instantiate(boss, bossposition, Quaternion.identity);

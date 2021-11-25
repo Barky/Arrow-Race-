@@ -11,6 +11,7 @@ public class GameManager : MonoBehaviour
     public bool levelFinished;
     public bool playerDied;
     public bool isNextLevel, isSameLevel;
+    public bool levelendspiderdied = false;
     public int currentcloneno, lastcloneno;
 
 

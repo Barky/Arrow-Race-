@@ -12,6 +12,7 @@ public class EnemyController : MonoBehaviour
     private int minHealth = 2, maxHealth = 6, health;
     private Transform player;
     private int cloneNo;
+    private bool playerspawned = false;
 
     [SerializeField]
     private Transform arrowPrefab;
@@ -34,9 +35,7 @@ public class EnemyController : MonoBehaviour
         instance = this;
         m_anim = GetComponent<Animator>();
         health = Random.Range(minHealth, maxHealth);
-        player = GameObject.FindGameObjectWithTag("Player").transform;
-
-        clonePositionControler = GameObject.FindGameObjectWithTag("Player").GetComponent<ClonePositionControler>();
+        
         
         string nameOfParent = gameObject.name;
         string nameOfchild = "Text";
@@ -61,6 +60,14 @@ public class EnemyController : MonoBehaviour
     }
     private void Update()
     {
+        if (!player)
+        {
+
+            player = GameObject.FindGameObjectWithTag("Player").transform;
+
+            clonePositionControler = GameObject.FindGameObjectWithTag("Player").GetComponent<ClonePositionControler>();
+            return;
+        }
         Debug.Log(cloneNo);
         if (healthText){
         healthText.text = health.ToString();
