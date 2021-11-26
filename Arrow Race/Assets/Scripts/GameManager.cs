@@ -21,7 +21,7 @@ public class GameManager : MonoBehaviour
     }
 
 private void Update() {
-    
+        Debug.Log("klon sayýsý: "+currentcloneno);
 }
 
 public void CheckPlayerPrefs(){

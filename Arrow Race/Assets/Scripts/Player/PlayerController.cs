@@ -5,14 +5,15 @@ using UnityEngine.UI;
 
 public class PlayerController : MonoBehaviour
 {
-    //[SerializeField]
-    private float swerveSpeed = 1300f, platformWidth = 5.5f, movementSpeed = 4f, sliderchange, transformlength;
+    public static PlayerController instance;
+    private float swerveSpeed = 130f, platformWidth = 5.5f, movementSpeed = 4f, sliderchange, transformlength;
     private bool isGameStarted;
     private float firstposition,lastpositionz, sliderchangez;
     private Transform lastposition;
     private Vector3 movementPosition;
     Slider levelslider;
     Animator anim;
+    public bool anim_gamestarted, anim_levelend;
 
     //public void sliderchange()
     //{
@@ -22,6 +23,7 @@ public class PlayerController : MonoBehaviour
     //}
     private void Awake()
     {
+        instance = this;
         levelslider = GameObject.Find("/UICamera/Canvas/in_level_panel/level_bar").GetComponent<Slider>();
         firstposition = transform.position.z;
         Transform levelend = GameObject.Find("/LevelEnd").transform;
@@ -34,18 +36,12 @@ public class PlayerController : MonoBehaviour
 
         levelslider.value = 0.2f;
          transformlength = lastpositionz - firstposition;
-        Debug.Log(transformlength);
-      //   StartCoroutine(onesecdistance());
 
-    }
-    void slidermove(float distancemade){
-        if (distancemade > 0){
-
-        
-        }
     }
     private void Update()
     {
+        anim_gamestarted = anim.GetBool("gameStarted");
+        anim_levelend = anim.GetBool("levelEnd");
         if (GameManager.instance.levelFinished){
             return;
         }
@@ -53,7 +49,10 @@ public class PlayerController : MonoBehaviour
         if(!GameManager.instance.LevelStarted){
             return;
         }
-        anim.SetBool("gameStarted", true);
+        if (!GameManager.instance.LevelEndGame)
+        {
+            anim.SetBool("gameStarted", true);
+        }
         float newx = 0, swipeDelta = 0;
         // if on mobile
         if(Input.touchCount == 1 && Input.GetTouch(0).phase == TouchPhase.Moved)
@@ -70,12 +69,15 @@ public class PlayerController : MonoBehaviour
 
 
         newx = Mathf.Clamp(newx, -platformWidth, platformWidth);
-        if(GameManager.instance.LevelEndGame){
+        
+        if (GameManager.instance.LevelEndGame){
+            anim.SetBool("gameStarted", false);
+            anim.SetBool("levelEnd", true);
             movementPosition = new Vector3(newx, transform.position.y, transform.position.z);
             transform.position = movementPosition;
             return;
         }
-
+        
         movementPosition = new Vector3(newx, transform.position.y, transform.position.z + movementSpeed * Time.deltaTime);
         sliderchangez = ((movementPosition.z - transform.position.z) * 1.8f) / transformlength;
         levelslider.value += sliderchangez;

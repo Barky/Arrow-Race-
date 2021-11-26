@@ -1157,6 +1157,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 646b8d31d40682147b2009e629487cfe, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  shotFX: {fileID: 7694459421277680095, guid: 5748899043de91c4baf0428800fc6708, type: 3}
+  dieFX: {fileID: 2542107860001108803, guid: 166f4eb6e1ed3d948ac00fd65bebb02b, type: 3}
 --- !u!1 &344105681250051119
 GameObject:
   m_ObjectHideFlags: 0

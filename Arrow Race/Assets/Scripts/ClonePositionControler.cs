@@ -33,6 +33,7 @@ public class ClonePositionControler : MonoBehaviour
         private void Update()
         {
             ElementAdd();
+        GameManager.instance.currentcloneno = CloneNoFinder();
         }
 
         void ElementAdd(){
@@ -52,6 +53,17 @@ public class ClonePositionControler : MonoBehaviour
                 cloneBehaviour.Add(new CloneBehaviour(newplace, false));
             }
         }
-
-
+    int CloneNoFinder()
+    {
+        int tempclone = 0;
+        for (int i = 0; i < cloneBehaviour.Count; i++)
+        {
+            
+            if (cloneBehaviour[i].IsFull)
+            {
+                tempclone++;
+            }
+        }
+        return tempclone;
+    }
 }

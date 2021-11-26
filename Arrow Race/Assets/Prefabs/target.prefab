@@ -284,6 +284,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0236ee9e1ffb9324a951cec618e5b7d3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  shotFX: {fileID: 7694459421277680095, guid: 5748899043de91c4baf0428800fc6708, type: 3}
+  dieFX: {fileID: 2542107860001108803, guid: 166f4eb6e1ed3d948ac00fd65bebb02b, type: 3}
+  arrowPrefab: {fileID: 0}
 --- !u!54 &1966062596495716724
 Rigidbody:
   m_ObjectHideFlags: 0

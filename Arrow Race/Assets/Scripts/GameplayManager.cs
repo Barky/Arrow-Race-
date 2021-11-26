@@ -77,15 +77,21 @@ public class GameplayManager : MonoBehaviour
     public void LevelEnded(){
         
         if(endfunc_temp){
-        levelNo ++;
+        
+        endfunc_temp = false;
+            StartCoroutine(waittwosec());
+        }
+    }
+    IEnumerator waittwosec()
+    {
+        yield return new WaitForSeconds(1.5f);
+        levelNo++;
         Time.timeScale = 0;
         winpanel.gameObject.SetActive(true);
         UpdatePlayerPrefs();
-       // Debug.Log("LevelStarted: "+LevelStarted+"LevelEndGame :"+ LevelEndGame+ "levelFinished: "+levelFinished+"playerdied :"+ playerDied);
+        // Debug.Log("LevelStarted: "+LevelStarted+"LevelEndGame :"+ LevelEndGame+ "levelFinished: "+levelFinished+"playerdied :"+ playerDied);
         panelgoldlevelui.text = "+ " + inlevelgoldno.ToString();
         panelgoldtotalui.text = PlayerPrefs.GetInt("Gold").ToString();
-        endfunc_temp = false;
-        }
     }
     void UpdatePlayerPrefs(){ // level end'de çağır lütf
         if(goldNo != PlayerPrefs.GetInt("Gold")){

@@ -6,6 +6,10 @@ using TMPro;
 public class EnemyController : MonoBehaviour
 {
     Animator m_anim;
+
+    public Transform shotFX, dieFX;
+
+
     public static EnemyController instance;
     ClonePositionControler clonePositionControler;
     private TextMeshPro healthText;
@@ -13,7 +17,7 @@ public class EnemyController : MonoBehaviour
     private Transform player;
     private int cloneNo;
     private bool playerspawned = false;
-
+    private Transform FXParent;
     [SerializeField]
     private Transform arrowPrefab;
 
@@ -23,9 +27,9 @@ public class EnemyController : MonoBehaviour
 
 
 
-    private float arrowx=0f, arrowy = 2.5f, arrowz = 2.5f;
+    private float arrowx=0f, minarrowy = 0.5f, maxarrowy = 1.2f, arrowy, arrowz = 2.5f;
 
-    private float  arrow_cooldown = 0.4f;
+    private float  arrow_cooldown = 0.6f;
     
 
 
@@ -35,7 +39,7 @@ public class EnemyController : MonoBehaviour
         instance = this;
         m_anim = GetComponent<Animator>();
         health = Random.Range(minHealth, maxHealth);
-        
+        FXParent = GameObject.Find("/Particles").transform;
         
         string nameOfParent = gameObject.name;
         string nameOfchild = "Text";
@@ -73,26 +77,23 @@ public class EnemyController : MonoBehaviour
         healthText.text = health.ToString();
         }
         if (gameObject.tag == "PlayerClone"){
-            m_anim.SetBool("isCloned", true);
-            transform.position = clonePositionControler.cloneBehaviour[cloneNo].Cube.transform.position;
-            if (GameManager.instance.levelFinished){
-                m_anim.SetBool("isCloned", false);
-            }
-            
-        }
-        if (gameObject.tag == "PlayerClone"){
+            m_anim.SetBool("isCloned", PlayerController.instance.anim_gamestarted);
+            m_anim.SetBool("LevelEnd", PlayerController.instance.anim_levelend);
+            arrowy = Random.Range(minarrowy, maxarrowy);
             FillintheBlanks(cloneNo);
+            // transform.position = clonePositionControler.cloneBehaviour[cloneNo].Cube.transform.position;
+
         }
     }
 
     void FillintheBlanks(int no){
-        Debug.Log("çalıştı");
-        for (int i = 0; i < no; i++)
+        for (int i = no-1 ; i>=0 ; i--)
         {
             if (!clonePositionControler.cloneBehaviour[i].IsFull){
-                transform. position = clonePositionControler.cloneBehaviour[i].Cube.transform.position;
-                clonePositionControler.cloneBehaviour[i].IsFull=true;
-                clonePositionControler.cloneBehaviour[cloneNo].IsFull = false;
+
+                clonePositionControler.cloneBehaviour[i].IsFull = true;
+                clonePositionControler.cloneBehaviour[no].IsFull = false;
+                transform.position = clonePositionControler.cloneBehaviour[i].Cube.transform.position;
             }
         }
     }
@@ -102,14 +103,18 @@ public class EnemyController : MonoBehaviour
         {
 
             health--;
+            StartCoroutine(shotfx());
             if (health == 0)
             {
                 if (gameObject.tag == "EnemyDummy")
                 {
+                    StartCoroutine(diefx());
                     Destroy(gameObject);
                 }
+
                 else if (gameObject.tag == "EnemyPlayer")
                 {
+                    StartCoroutine(diefx());
                     Destroy(healthText);
                     
                     transform.SetParent(player, true);
@@ -134,7 +139,28 @@ public class EnemyController : MonoBehaviour
             }
         }
     }
-
+    IEnumerator shotfx()
+    {
+        Transform fxcreated;
+        Vector3 fxpos = transform.position;
+        fxpos.z -= 1f;
+        fxcreated = Instantiate(shotFX, fxpos, Quaternion.identity);
+        fxcreated.name = "shotFX";
+        fxcreated.parent = FXParent;
+        yield return new WaitForSeconds(1f);
+        Destroy(fxcreated.gameObject);
+    }
+    IEnumerator diefx()
+    {
+        Transform fxcreated;
+        Vector3 fxpos = transform.position;
+        fxpos.z -= 1f;
+        fxcreated = Instantiate(dieFX, fxpos, Quaternion.identity);
+        fxcreated.name = "dieFX";
+        fxcreated.parent = FXParent;
+        yield return new WaitForSeconds(2f);
+        Destroy(fxcreated.gameObject);
+    }
     IEnumerator constantShoot()
     {
        
@@ -149,13 +175,18 @@ public class EnemyController : MonoBehaviour
             
     private void OnCollisionEnter(Collision target)
     {
-        if (gameObject.tag == "PlayerClone" && target.gameObject.tag == "EnemyPlayer")
+        if (gameObject.tag == "PlayerClone" && target.gameObject.tag == "EnemyPlayer"  )
         {
             clonePositionControler.cloneBehaviour[cloneNo].IsFull = false;
             Destroy(gameObject);
             
         }
+        if (gameObject.tag == "PlayerClone" && target.gameObject.tag == "Obstacle"  )
+        {
+            clonePositionControler.cloneBehaviour[cloneNo].IsFull = false;
+            Destroy(gameObject);
 
+        }
         if (gameObject.tag == "EnemyPlayer" && target.gameObject.tag == "Player")
         {
             GameManager.instance.playerDied = true;

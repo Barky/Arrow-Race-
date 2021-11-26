@@ -20,7 +20,7 @@ public class PlayerBehaviour : MonoBehaviour
 
     private float arrowx=0f, minarrowy = 0.5f, maxarrowy = 1.2f, arrowy, arrowz = 2.5f, firstpos;
 
-    private float  arrow_cooldown = 0.3f;
+    private float  arrow_cooldown = 0.6f;
 
     private void Awake()
     {
@@ -55,7 +55,7 @@ public class PlayerBehaviour : MonoBehaviour
     
         private void OnCollisionEnter(Collision target)
     {
-        if (target.gameObject.tag == "EnemyPlayer" || target.gameObject.tag == "EnemyDummy")
+        if (target.gameObject.tag == "EnemyPlayer" || target.gameObject.tag == "EnemyDummy" || target.gameObject.tag == "Obstacle")
         {
             if(GameManager.instance.currentcloneno == 0 && gameObject.tag == "Player"){
                GameManager.instance.playerDied = true;
