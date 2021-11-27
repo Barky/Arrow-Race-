@@ -6,7 +6,7 @@ using UnityEngine.UI;
 public class PlayerController : MonoBehaviour
 {
     public static PlayerController instance;
-    private float swerveSpeed = 130f, platformWidth = 5.5f, movementSpeed = 4f, sliderchange, transformlength;
+    private float swerveSpeed = 300f, platformWidth = 5.5f, movementSpeed = 4f, sliderchange, transformlength;
     private bool isGameStarted;
     private float firstposition,lastpositionz, sliderchangez;
     private Transform lastposition;
@@ -14,13 +14,6 @@ public class PlayerController : MonoBehaviour
     Slider levelslider;
     Animator anim;
     public bool anim_gamestarted, anim_levelend;
-
-    //public void sliderchange()
-    //{
-    //    float distances = lastposition.transform.position.z;
-    //    levelslider.value = transform.position.z / distances;
-
-    //}
     private void Awake()
     {
         instance = this;
@@ -36,11 +29,12 @@ public class PlayerController : MonoBehaviour
 
         levelslider.value = 0.2f;
          transformlength = lastpositionz - firstposition;
+        Input.multiTouchEnabled = false;
 
     }
     private void Update()
     {
-        anim_gamestarted = anim.GetBool("gameStarted");
+       anim_gamestarted = anim.GetBool("gameStarted");
         anim_levelend = anim.GetBool("levelEnd");
         if (GameManager.instance.levelFinished){
             return;
@@ -55,7 +49,7 @@ public class PlayerController : MonoBehaviour
         }
         float newx = 0, swipeDelta = 0;
         // if on mobile
-        if(Input.touchCount == 1 && Input.GetTouch(0).phase == TouchPhase.Moved)
+        if(Input.touchCount > 0 && Input.GetTouch(0).phase == TouchPhase.Moved )
         {
             swipeDelta = Input.GetTouch(0).deltaPosition.x / Screen.width;
         }

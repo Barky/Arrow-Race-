@@ -20,9 +20,6 @@ public class GameManager : MonoBehaviour
         CheckPlayerPrefs();
     }
 
-private void Update() {
-        Debug.Log("klon sayýsý: "+currentcloneno);
-}
 
 public void CheckPlayerPrefs(){
         if (PlayerPrefs.HasKey("Gold")){

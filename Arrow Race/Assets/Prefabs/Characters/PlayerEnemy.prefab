@@ -906,6 +906,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   shotFX: {fileID: 7694459421277680095, guid: 5748899043de91c4baf0428800fc6708, type: 3}
   dieFX: {fileID: 2542107860001108803, guid: 166f4eb6e1ed3d948ac00fd65bebb02b, type: 3}
+  spawnFX: {fileID: 6447855567668430347, guid: 9acc0d479bf929e4d8ac424b7b35a418, type: 3}
   arrowPrefab: {fileID: 400000, guid: cff4c024d20095a458a66e6e0d47bf1b, type: 3}
 --- !u!54 &4754230416152866984
 Rigidbody:

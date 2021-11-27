@@ -20,21 +20,16 @@ public class CameraController : MonoBehaviour
             Player = GameObject.FindGameObjectWithTag("Player").transform;
             return;
         }
-        if (Player){
-        if(GameManager.instance.LevelEndGame){
-            newpositioncamera = new Vector3(Player.transform.position.x + offsetx, Player.transform.position.y +9.5f, Player.transform.position.z + offsetz + 0.8f);
-
-                Tween.Position(transform, newpositioncamera, duration, delay);
-
-              //  transform.Rotate(-15f, 0f, 0f, Space.Self);
-            return;
-        }
-            if (!GameManager.instance.LevelEndGame)
+            switch (GameManager.instance.LevelEndGame)
             {
-                newpositioncamera = new Vector3(Player.transform.position.x + offsetx, Player.transform.position.y + constanty, Player.transform.position.z + offsetz);
-                Tween.Position(transform, newpositioncamera, duration, delay);
+                case true:
+                    newpositioncamera = new Vector3(Player.transform.position.x + offsetx, Player.transform.position.y + 9.5f, Player.transform.position.z + offsetz + 0.8f);
+                    break;
+                case false:
+                    newpositioncamera = new Vector3(Player.transform.position.x + offsetx, Player.transform.position.y + constanty, Player.transform.position.z + offsetz);
+                    break;
             }
-
-    }
+            Tween.Position(transform, newpositioncamera, duration, delay);
+    
     }
 }

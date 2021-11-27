@@ -7,7 +7,7 @@ public class EnemyController : MonoBehaviour
 {
     Animator m_anim;
 
-    public Transform shotFX, dieFX;
+    public Transform shotFX, dieFX, spawnFX;
 
 
     public static EnemyController instance;
@@ -16,6 +16,7 @@ public class EnemyController : MonoBehaviour
     private int minHealth = 2, maxHealth = 6, health;
     private Transform player;
     private int cloneNo;
+    private float swervespeed = 2f, movementSpeed = 10f;
     private bool playerspawned = false;
     private Transform FXParent;
     [SerializeField]
@@ -25,7 +26,7 @@ public class EnemyController : MonoBehaviour
 
     Vector3 arrowpos;
 
-
+    Vector3 spawnposition;
 
     private float arrowx=0f, minarrowy = 0.5f, maxarrowy = 1.2f, arrowy, arrowz = 2.5f;
 
@@ -64,6 +65,7 @@ public class EnemyController : MonoBehaviour
     }
     private void Update()
     {
+
         if (!player)
         {
 
@@ -72,27 +74,35 @@ public class EnemyController : MonoBehaviour
             clonePositionControler = GameObject.FindGameObjectWithTag("Player").GetComponent<ClonePositionControler>();
             return;
         }
-        Debug.Log(cloneNo);
+
+
         if (healthText){
         healthText.text = health.ToString();
         }
+
+        
         if (gameObject.tag == "PlayerClone"){
+
             m_anim.SetBool("isCloned", PlayerController.instance.anim_gamestarted);
             m_anim.SetBool("LevelEnd", PlayerController.instance.anim_levelend);
             arrowy = Random.Range(minarrowy, maxarrowy);
-            FillintheBlanks(cloneNo);
+            if (cloneNo > 0)
+            {
+                FillintheBlanks(cloneNo);
+            }
             // transform.position = clonePositionControler.cloneBehaviour[cloneNo].Cube.transform.position;
 
         }
     }
 
     void FillintheBlanks(int no){
-        for (int i = no-1 ; i>=0 ; i--)
+        for (int i = 0 ; i < cloneNo; i++)
         {
             if (!clonePositionControler.cloneBehaviour[i].IsFull){
 
                 clonePositionControler.cloneBehaviour[i].IsFull = true;
                 clonePositionControler.cloneBehaviour[no].IsFull = false;
+                cloneNo = i;
                 transform.position = clonePositionControler.cloneBehaviour[i].Cube.transform.position;
             }
         }
@@ -114,31 +124,18 @@ public class EnemyController : MonoBehaviour
 
                 else if (gameObject.tag == "EnemyPlayer")
                 {
-                    StartCoroutine(diefx());
-                    Destroy(healthText);
-                    
-                    transform.SetParent(player, true);
-                    transform.tag = "PlayerClone";
 
-                    for(int i = 0; i <clonePositionControler.cloneBehaviour.Count; i++)
-                    {
-                        if(!clonePositionControler.cloneBehaviour[i].IsFull)
-                        {
-                            
-                            transform.position = clonePositionControler.cloneBehaviour[i].Cube.transform.position;
-                            clonePositionControler.cloneBehaviour[i].IsFull = true;
-                            
-                            cloneNo = i;
-                            break;
-                        }
-                    }
+                    StartCoroutine(diefx());
                     
+                    StartCoroutine(spawning());
                     StartCoroutine(constantShoot());
 
                 }
             }
         }
     }
+
+
     IEnumerator shotfx()
     {
         Transform fxcreated;
@@ -158,6 +155,34 @@ public class EnemyController : MonoBehaviour
         fxcreated = Instantiate(dieFX, fxpos, Quaternion.identity);
         fxcreated.name = "dieFX";
         fxcreated.parent = FXParent;
+        yield return new WaitForSeconds(2f);
+        Destroy(fxcreated.gameObject);
+    }
+    IEnumerator spawning()
+    {
+        Destroy(healthText);
+        transform.SetParent(player, true);
+        transform.tag = "PlayerClone";
+        transform.localScale = new Vector3(0, 0, 0);
+        
+        for (int i = 0; i < clonePositionControler.cloneBehaviour.Count; i++)
+        {
+            if (!clonePositionControler.cloneBehaviour[i].IsFull)
+            {
+
+                cloneNo = i;
+                break;
+            }
+        }
+        clonePositionControler.cloneBehaviour[cloneNo].IsFull = true;
+        Transform fxcreated;
+        Vector3 fxpos = clonePositionControler.cloneBehaviour[cloneNo].Cube.transform.position;
+        fxcreated = Instantiate(spawnFX, fxpos, Quaternion.identity);
+        fxcreated.name = "spawnFX";
+        fxcreated.parent = FXParent;
+        yield return new WaitForSeconds(0.4f);
+        transform.localScale = new Vector3(1, 1, 1);
+        transform.position = clonePositionControler.cloneBehaviour[cloneNo].Cube.transform.position;
         yield return new WaitForSeconds(2f);
         Destroy(fxcreated.gameObject);
     }
