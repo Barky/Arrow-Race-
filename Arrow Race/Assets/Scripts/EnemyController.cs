@@ -30,8 +30,8 @@ public class EnemyController : MonoBehaviour
 
     private float arrowx=0f, minarrowy = 0.5f, maxarrowy = 1.2f, arrowy, arrowz = 2.5f;
 
-    private float  arrow_cooldown = 0.6f;
-    
+    private float arrow_cooldown;
+
 
 
 
@@ -62,6 +62,7 @@ public class EnemyController : MonoBehaviour
     private void Start()
     {
         health = Random.Range(minHealth, maxHealth);
+        arrow_cooldown = GameManager.instance.arrow_cooldown;
     }
     private void Update()
     {

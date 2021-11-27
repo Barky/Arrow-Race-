@@ -10,11 +10,15 @@ public class GameplayManager : MonoBehaviour
     private bool endfunc_temp = true;
     private Text goldText, panelgoldlevelui,panelgoldtotalui, levelText;
     private GameObject levelstartui, winpanel, losepanel, in_level_panel;
+    private GameObject loadingpanel;
+
     
     public int goldNo = 0, levelNo, inlevelgoldno;
     private string canvasshortcut = "/UICamera/Canvas";
 
     public Transform playerprefab;
+
+    public GameObject Loadingpanel { get => loadingpanel; set => loadingpanel = value; }
 
     private void Awake() {
         MakeInstance();
@@ -26,6 +30,7 @@ public class GameplayManager : MonoBehaviour
         levelText = GameObject.Find(canvasshortcut + "/in_level_panel/Level/LevelNo").GetComponent<Text>();
         panelgoldtotalui = GameObject.Find(canvasshortcut + "/Win/Coin/Text").GetComponent<Text>(); // top right corner
         panelgoldlevelui = GameObject.Find(canvasshortcut + "/Win/Background/Text").GetComponent<Text>(); // middle
+       // loadingpanel = GameObject.Find(canvasshortcut + "/");
 }
     void gameStart(){
         if(Input.touchCount > 0 || Input.GetMouseButtonDown(0)){

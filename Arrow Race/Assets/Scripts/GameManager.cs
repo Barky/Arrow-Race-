@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 public class GameManager : MonoBehaviour
 {
@@ -13,6 +14,7 @@ public class GameManager : MonoBehaviour
     public bool isNextLevel, isSameLevel;
     public bool levelendspiderdied = false;
     public int currentcloneno, lastcloneno;
+    public float arrow_cooldown = 0.5f;
 
 
     private void Awake() {
@@ -49,23 +51,27 @@ public void CheckPlayerPrefs(){
         playerDied = false;
         LevelStarted = false;
         Time.timeScale = 1f;
-        sceneselection();
+        StartCoroutine(LevelManager.instance.SceneAsyn(sceneselection()));
     }
     public void Restart()
     {
         playerDied = false;
         LevelStarted = false;
         Time.timeScale = 1f;
-        sceneselection();
+        StartCoroutine(LevelManager.instance.SceneAsyn(SceneManager.GetActiveScene().name));
+       // sceneselection();
         
     }
-
-    void sceneselection(){
+    string sceneselection(){
         if(SceneManager.GetActiveScene().name == "Level1"){
-            SceneManager.LoadScene("Level2");
+            return "Level2";
         }
         else if (SceneManager.GetActiveScene().name == "Level2"){
-            SceneManager.LoadScene("Level1");
+            return "Level1";
+        }
+        else
+        {
+            return "Level2";
         }
     }
     void MakeInstance()

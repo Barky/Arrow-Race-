@@ -20,7 +20,7 @@ public class LevelEnd : MonoBehaviour
             }
         }
     }
-
+    
     void Start()
     {
         levelslider = GameObject.Find("/UICamera/Canvas/in_level_panel/level_bar").GetComponent<Slider>();
