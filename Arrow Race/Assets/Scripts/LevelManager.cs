@@ -10,17 +10,18 @@ public class LevelManager : MonoBehaviour
 
     private GameObject loadingscreen;
 
+    public GameObject Loadingscreen { get => loadingscreen; set => loadingscreen = value; }
 
     void Awake()
     {
         MakeInstance();
 
-        loadingscreen = GameObject.Find("/UICamera/Canvas/Loadingscreen");
+        Loadingscreen = GameObject.Find("/UICamera/Canvas/Loadingscreen");
     }
 
     public IEnumerator SceneAsyn(string scenename)
     {
-        loadingscreen.SetActive(true);
+        Loadingscreen.SetActive(true);
         AsyncOperation operat = SceneManager.LoadSceneAsync(scenename);
 
         while (!operat.isDone)

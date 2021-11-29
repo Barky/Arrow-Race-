@@ -9,21 +9,20 @@ public class EnemyController : MonoBehaviour
 
     public Transform shotFX, dieFX, spawnFX;
 
-
+    private float swerveSpeed = 2f, movementSpeed = -3f;
     public static EnemyController instance;
     ClonePositionControler clonePositionControler;
     private TextMeshPro healthText;
     private int minHealth = 2, maxHealth = 6, health;
     private Transform player;
     private int cloneNo;
-    private float swervespeed = 2f, movementSpeed = 10f;
-    private bool playerspawned = false;
+    private bool playerspawned = false, playersetted = false;
     private Transform FXParent;
     [SerializeField]
     private Transform arrowPrefab;
 
     private Transform arrowparent;
-
+    private Transform spawnpositionnext;
     Vector3 arrowpos;
 
     Vector3 spawnposition;
@@ -32,7 +31,7 @@ public class EnemyController : MonoBehaviour
 
     private float arrow_cooldown;
 
-
+    private bool spawnedandmoved = false;
 
 
     private void Awake()
@@ -55,7 +54,7 @@ public class EnemyController : MonoBehaviour
              childLocation =  "/" + nameOfParent + "/" + nameOfchild;
         }
         healthText = GameObject.Find(childLocation).GetComponent<TextMeshPro>();
-
+        
 
     }
 
@@ -80,7 +79,6 @@ public class EnemyController : MonoBehaviour
         if (healthText){
         healthText.text = health.ToString();
         }
-
         
         if (gameObject.tag == "PlayerClone"){
 
@@ -91,9 +89,13 @@ public class EnemyController : MonoBehaviour
             {
                 FillintheBlanks(cloneNo);
             }
-            // transform.position = clonePositionControler.cloneBehaviour[cloneNo].Cube.transform.position;
+            if (PlayerController.instance.anim_gamestarted)
+            {
+                m_anim.SetFloat("timeclone", PlayerController.instance.animtime);
+            }
 
         }
+        
     }
 
     void FillintheBlanks(int no){
@@ -127,7 +129,7 @@ public class EnemyController : MonoBehaviour
                 {
 
                     StartCoroutine(diefx());
-                    
+                    spawnedandmoved = true;
                     StartCoroutine(spawning());
                     StartCoroutine(constantShoot());
 
@@ -198,26 +200,44 @@ public class EnemyController : MonoBehaviour
                 yield return new WaitForSeconds(arrow_cooldown);
             }
     }
-            
-    private void OnCollisionEnter(Collision target)
+    IEnumerator clonedie()
     {
-        if (gameObject.tag == "PlayerClone" && target.gameObject.tag == "EnemyPlayer"  )
-        {
-            clonePositionControler.cloneBehaviour[cloneNo].IsFull = false;
-            Destroy(gameObject);
-            
-        }
-        if (gameObject.tag == "PlayerClone" && target.gameObject.tag == "Obstacle"  )
-        {
-            clonePositionControler.cloneBehaviour[cloneNo].IsFull = false;
-            Destroy(gameObject);
+        gameObject.transform.localScale = Vector3.zero;
+        yield return new WaitForSeconds(1f);
+        clonePositionControler.cloneBehaviour[cloneNo].IsFull = false;
+        Destroy(gameObject);
+    }
+    private void OnCollisionEnter(Collision target)
 
-        }
-        if (gameObject.tag == "EnemyPlayer" && target.gameObject.tag == "Player")
+    {
+
+        if (gameObject.tag == "PlayerClone")
         {
-            GameManager.instance.playerDied = true;
-            // level bitme scripti yaz
+            if(target.gameObject.tag == "EnemyPlayer" || target.gameObject.tag == "Obstacle" )
+            {
+                StartCoroutine(clonedie());
+            }
         }
+
+
+
+        //if (gameObject.tag == "PlayerClone" && target.gameObject.tag == "EnemyPlayer"  )
+        //{
+        //    clonePositionControler.cloneBehaviour[cloneNo].IsFull = false;
+        //    Destroy(gameObject);
+            
+        //}
+        //if (gameObject.tag == "PlayerClone" && target.gameObject.tag == "Obstacle"  )
+        //{
+        //    clonePositionControler.cloneBehaviour[cloneNo].IsFull = false;
+        //    Destroy(gameObject);
+
+        //}
+        //if (gameObject.tag == "EnemyPlayer" && target.gameObject.tag == "Player")
+        //{
+        //    GameManager.instance.playerDied = true;
+        //    // level bitme scripti yaz
+        //}
 
         
     }

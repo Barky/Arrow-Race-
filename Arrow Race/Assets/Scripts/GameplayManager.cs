@@ -9,7 +9,7 @@ public class GameplayManager : MonoBehaviour
     public static GameplayManager instance;
     private bool endfunc_temp = true;
     private Text goldText, panelgoldlevelui,panelgoldtotalui, levelText;
-    private GameObject levelstartui, winpanel, losepanel, in_level_panel;
+    private GameObject levelstartui, winpanel, losepanel, in_level_panel, pausebutton;
     private GameObject loadingpanel;
 
     
@@ -27,15 +27,18 @@ public class GameplayManager : MonoBehaviour
         in_level_panel = GameObject.Find(canvasshortcut + "/in_level_panel");
         winpanel = GameObject.Find(canvasshortcut + "/Win");
         losepanel = GameObject.Find(canvasshortcut + "/Lose");
+        pausebutton = GameObject.Find(canvasshortcut + "/in_level_panel/Pause");
         levelText = GameObject.Find(canvasshortcut + "/in_level_panel/Level/LevelNo").GetComponent<Text>();
         panelgoldtotalui = GameObject.Find(canvasshortcut + "/Win/Coin/Text").GetComponent<Text>(); // top right corner
         panelgoldlevelui = GameObject.Find(canvasshortcut + "/Win/Background/Text").GetComponent<Text>(); // middle
-       // loadingpanel = GameObject.Find(canvasshortcut + "/");
-}
+        pausebutton.SetActive(false);
+        // loadingpanel = GameObject.Find(canvasshortcut + "/");
+    }
     void gameStart(){
         if(Input.touchCount > 0 || Input.GetMouseButtonDown(0)){
             GameManager.instance.LevelStarted = true;
             levelstartui.SetActive(false);
+            pausebutton.SetActive(true);
 
         }}
     private void Update() {
@@ -89,12 +92,13 @@ public class GameplayManager : MonoBehaviour
     }
     IEnumerator waittwosec()
     {
+        pausebutton.SetActive(false);
         yield return new WaitForSeconds(1.5f);
         levelNo++;
         Time.timeScale = 0;
         winpanel.gameObject.SetActive(true);
         UpdatePlayerPrefs();
-        // Debug.Log("LevelStarted: "+LevelStarted+"LevelEndGame :"+ LevelEndGame+ "levelFinished: "+levelFinished+"playerdied :"+ playerDied);
+
         panelgoldlevelui.text = "+ " + inlevelgoldno.ToString();
         panelgoldtotalui.text = PlayerPrefs.GetInt("Gold").ToString();
     }

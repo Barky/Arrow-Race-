@@ -15,6 +15,7 @@ public class GameManager : MonoBehaviour
     public bool levelendspiderdied = false;
     public int currentcloneno, lastcloneno;
     public float arrow_cooldown = 0.5f;
+    
 
 
     private void Awake() {

@@ -6,11 +6,12 @@ using UnityEngine.UI;
 public class PlayerController : MonoBehaviour
 {
     public static PlayerController instance;
-    private float swerveSpeed = 300f, platformWidth = 5.5f, movementSpeed = 4f, sliderchange, transformlength;
+    private float swerveSpeed = 1000f, platformWidth = 5.5f, movementSpeed = 4f, sliderchange, transformlength;
     private bool isGameStarted;
     private float firstposition,lastpositionz, sliderchangez;
     private Transform lastposition;
     private Vector3 movementPosition;
+    public float animtime;
     Slider levelslider;
     Animator anim;
     public bool anim_gamestarted, anim_levelend;
@@ -36,6 +37,7 @@ public class PlayerController : MonoBehaviour
     {
        anim_gamestarted = anim.GetBool("gameStarted");
         anim_levelend = anim.GetBool("levelEnd");
+        
         if (GameManager.instance.levelFinished){
             return;
         }
@@ -46,6 +48,10 @@ public class PlayerController : MonoBehaviour
         if (!GameManager.instance.LevelEndGame)
         {
             anim.SetBool("gameStarted", true);
+        }
+        if (anim.GetBool("gameStarted"))
+        {
+            animtime = anim.GetCurrentAnimatorStateInfo(0).normalizedTime;
         }
         float newx = 0, swipeDelta = 0;
         // if on mobile

@@ -9,15 +9,14 @@ public class BossController : MonoBehaviour
     private Transform FXParent;
     private TextMeshPro healthUI;
     private int bossHealth;
-    private float newx;
+    private float movementspeed = 1.6f;
+    private string side = "left";
     private int minBossHealth = 40, maxBossHealth = 100;
     Animator playeranim, cloneanim;
-
+    Vector3 swerving;
     private void Awake() {
         healthUI = GameObject.Find(this.gameObject.name + "/Text").GetComponent<TextMeshPro>();
         bossHealth = Random.Range(minBossHealth, maxBossHealth);
-        //transform.position = new Vector3(-5f, transform.position.y, transform.position.z);
-        newx = transform.position.x;
         healthUI.text = bossHealth.ToString();
         playeranim = GameObject.FindGameObjectWithTag("Player").GetComponent<Animator>();
     }
@@ -26,26 +25,49 @@ public class BossController : MonoBehaviour
         FXParent = GameObject.Find("/Particles").transform;
     }
     private void Update() {
-
-        Debug.Log(bossHealth);
-        // yürütemedim hala amk
-        // if(newx == -5f){
-        //     newx = transform.position.x +1f*Time.deltaTime;
-        // }
-        // else if(newx == 5f){
-        //     newx = transform.position.x -1f*Time.deltaTime;
-        // }
-        // newx = Mathf.Clamp(newx, -5f, 5f);
-        // transform.position = new Vector3(newx, transform.position.y, transform.position.z);
-        
+        //if (bossHealth > 0 && GameManager.instance.LevelEndGame)
+        //{
+        //    bossMovement();
+        //}
+        bossMovement();
         if (bossHealth == 0)
         {
             Destroy(healthUI);
             StartCoroutine(diefx());
             StartCoroutine(destroyin());
-            
+
+
+        }
+    
+    
+    }
+
+    void bossMovement()
+    {
         
-}    }
+        switch (side)
+        {
+            case "left":
+                swerving = new Vector3(transform.position.x - movementspeed * Time.deltaTime, transform.position.y, transform.position.z);
+                break;
+            case "right":
+                swerving = new Vector3(transform.position.x + movementspeed * Time.deltaTime, transform.position.y, transform.position.z);
+                break;
+        }
+        transform.position = swerving;
+            if (side == "left" && transform.position.x < -4.7)
+            {
+                side = "right";
+            }
+            else if (side == "right" && transform.position.x > 4.7)
+            {
+                side = "left";
+            }
+
+        
+        
+
+    }
     IEnumerator shotfx()
     {
         Transform fxcreated;

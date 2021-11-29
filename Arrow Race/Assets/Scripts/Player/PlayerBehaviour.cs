@@ -57,9 +57,8 @@ public class PlayerBehaviour : MonoBehaviour
     {
         if (target.gameObject.tag == "EnemyPlayer" || target.gameObject.tag == "EnemyDummy" || target.gameObject.tag == "Obstacle")
         {
-            if(GameManager.instance.currentcloneno == 0 && gameObject.tag == "Player"){
                GameManager.instance.playerDied = true;
-            }
+            
             
         }
     }
