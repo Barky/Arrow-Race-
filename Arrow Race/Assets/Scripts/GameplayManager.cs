@@ -43,10 +43,12 @@ public class GameplayManager : MonoBehaviour
         }}
     private void Update() {
         if (GameManager.instance.playerDied){
-        Time.timeScale = 0;
-        in_level_panel.gameObject.SetActive(false);
-        losepanel.gameObject.SetActive(true);
-         }
+
+            Time.timeScale = 0;
+
+            in_level_panel.gameObject.SetActive(false);
+            losepanel.gameObject.SetActive(true);
+        }
         if (!GameManager.instance.LevelStarted && !GameManager.instance.levelFinished){
             levelText.text = levelNo.ToString();
             gameStart();
